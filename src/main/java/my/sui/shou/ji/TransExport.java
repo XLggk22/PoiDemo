@@ -16,7 +16,7 @@ public class TransExport {
 	
 	public static void main(String[] args) {
 		TransExport standerCode = new TransExport();
-		String excelParentPath= "I:\\坚果云同步\\我的坚果云\\财务管理系统\\随手记\\微信支付账单(20200101-20200131)\\";
+		String excelParentPath= "I:\\坚果云同步\\我的坚果云\\财务管理系统\\随手记\\微信支付账单(20200601-20200831)\\";
 		String importFilePath = excelParentPath + "处理数据.xlsx";
 		String exportFilePath = excelParentPath + "处理数据_处理后.xlsx";
 
@@ -120,21 +120,35 @@ public class TransExport {
                     || merchant.contains("猪脚饭")
                     || merchant.contains("麻辣烫")
                     || merchant.contains("木桶饭")
+                    || merchant.contains("盖码饭")
+                    || merchant.contains("蒸菜")
                     || merchant.contains("快餐")
+                    || merchant.contains("罐罐面")
+                    || merchant.contains("汤包")
+                    || merchant.contains("面馆")
+                    || merchant.contains("石磨坊")
+                    || merchant.contains("火锅")
+                    || merchant.contains("炒粉")
                     || merchant.contains("沙县"))){
                 return Classify.OUT_SHIPING_EAT;
             }
+            if (isNotEmpty(merchant) && (merchant.contains("便利店")
+                    || merchant.contains("水果")
+                    || merchant.contains("海南百果鲜干果园")
+                    || merchant.contains("深圳通"))){
+                return Classify.OUT_SHIPING_FLUT;
+            }
             if (isNotEmpty(merchant) && (merchant.contains("地铁")
-                    || merchant.contains("单车"))
+                    || merchant.contains("单车")
                     || merchant.contains("羊城通")
-                    || merchant.contains("深圳通")){
+                    || merchant.contains("深圳通"))){
                 return Classify.OUT_XINGCHE_GONGJIAO;
             }
             if (isNotEmpty(merchant) && merchant.contains("医院")
                 || merchant.contains("药")){
                 return  Classify.OUT_YILIAO_YAOPING;
             }
-            if (isNotEmpty(merchant) && merchant.contains("真善美")){
+            if (isNotEmpty(merchant) && merchant.contains("张爱彬")){
                 return Classify.OUT_JUJIA_FANGZHU;
             }
 
@@ -164,8 +178,14 @@ public class TransExport {
         if (isNotEmpty(payMethod) && payMethod.contains("招商银行")){
             return Account.CREDIT_ZHAOHANG;
         }
+		if (isNotEmpty(payMethod) && payMethod.contains("中信银行(5826)")){
+			return Account.CREDIT_ZHOGNXIN;
+		}
         if (isNotEmpty(payMethod) && payMethod.contains("平安银行")){
             return Account.CARD_PINGAN;
+        }
+        if (isNotEmpty(payMethod) && payMethod.contains("民生银行")){
+            return Account.CARD_MINSHENG;
         }
         if (isNotEmpty(payMethod) && payMethod.contains("零钱")){
             return Account.VITTUAL_WEIXIN;
